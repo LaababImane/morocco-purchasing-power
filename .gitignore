@@ -1,0 +1,24 @@
+# Raw downloaded bulletins (large, regenerable via 01_download_data.ipynb)
+hcp_docx_files/
+*.docx
+*.pdf
+*.rtf
+
+# Intermediate scraping artifacts (regenerable)
+hcp_bulletin_urls.csv
+hcp_docx_index.csv
+
+# Raw (uncleaned) intermediate CSVs — keep only data/processed/ versions
+hcp_monthly_category.csv
+hcp_yearly_category.csv
+hcp_city_indices.csv
+
+# Jupyter/Colab
+.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
