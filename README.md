@@ -41,7 +41,8 @@ morocco-purchasing-power/
 ├── .gitignore
 ├── notebooks/
 │   ├── 01_download_data.ipynb      # Scraping + extraction pipeline
-│   └── 02_data_quality.ipynb       # Cleaning, validation, normalization
+│   ├── 02_data_quality.ipynb       # Cleaning, validation, normalization
+│   └── 03_eda.ipynb                # Exploratory analysis
 └── data/
     └── processed/
         ├── hcp_monthly_category_clean.csv
@@ -53,32 +54,42 @@ morocco-purchasing-power/
 
 | File | Description | Rows |
 |---|---|---|
-| `hcp_monthly_category_clean.csv` | Month-over-month CPI by product category (15 categories) | 1,582 |
-| `hcp_yearly_category_clean.csv` | Year-over-year + cumulative CPI by product category | 1,757 |
-| `hcp_city_indices_clean.csv` | CPI by city (up to 20 cities monitored) | 2,235 |
+| `hcp_monthly_category_clean.csv` | Month-over-month CPI by product category (15 categories) | 2,666 |
+| `hcp_yearly_category_clean.csv` | Year-over-year + cumulative CPI by product category | 2,595 |
+| `hcp_city_indices_clean.csv` | CPI by city (up to 20 cities monitored) | 3,282 |
 
 ## Known Limitations
 
-- **4 months (2011–2012)** could not be downloaded due to broken or unrecognized
+- 4 months (2011–2012) could not be downloaded at all due to broken/unrecognized
   attachment links on HCP's archive.
-- **7 additional months** (scattered 2010–2013, plus Nov 2022) only have the
-  aggregate "Ensemble" index — individual category/city breakdowns were lost due
-  to PDF table-extraction failures in the source documents for these bulletins.
-- **Base-year rebasing**: the IPC series switched from base 100:2006 to base
-  100:2017 around April 2020. Raw index values are **not directly comparable**
-  across this boundary without rebasing — this will be addressed in the analysis
-  phase.
-- **"Errachidia"** appears only from ~2020 onward, reflecting HCP's expansion of
-  monitored cities over time — not a data quality issue.
+- ~12 additional months have no category-level breakdown (PDF table extraction
+  failed for these specific bulletins) — only the aggregate index exists for
+  these months.
+- One category ("05 - Meubles...") is missing for a single month (Décembre 2009).
+- Août–Décembre 2018 and Août 2025 appear to be genuinely absent from HCP's
+  standard monthly bulletin format (likely published as a combined bimonthly
+  bulletin under a different URL structure) rather than a scraping failure.
+- The IPC series underwent a base-year rebase (100:2006 → 100:2017) around
+  April 2020. Raw index values are not directly comparable across this
+  boundary — analysis that spans the full period accounts for this by
+  computing growth separately within each base-year period.
 
-Overall coverage: ~230 of 241 target months (95%+) with complete category-level
-detail.
+## Key Findings
+
+**Communication prices dropped ~33% between 2009-2020**, This was mainly because ANRT introduced rules to reduce telecom prices between 2010 and 2013.
+
+- **Clear seasonal pattern**: Prices increase the most in August and September, possibly because of back-to-school spending. Prices tend to fall in June, July, and November.
+
+- **Regional price variation**: There is about an 8-point difference between the cities with the highest CPI (Guelmim and Al-Hoceima) and the lowest (Settat).
+
+- **Al-Hoceima shows unusually high price volatility** compared to other cities. The biggest changes happened around 2013 and during the 2022–2024 inflation period. This suggests that the changes are linked to real local price movements.
 
 ## Tech Stack
 
 - **Python** — `requests`, `BeautifulSoup4` (scraping), `python-docx`, `pdfplumber`
   (table extraction from .docx/.pdf), custom RTF parser (regex-based)
 - **pandas** — data cleaning, transformation, validation
+- **matplotlib / seaborn** — exploratory data visualization
 - **SQL** *(planned)* — structured querying layer
 - **Power BI** *(planned)* — dashboard and visualization
 
@@ -93,6 +104,7 @@ Run the notebooks in order:
    (takes ~20-30 minutes due to polite rate-limiting)
 2. `02_data_quality.ipynb` — cleans and validates, outputs final CSVs to
    `data/processed/`
+3. `EDA.ipynb` — Exploratory Data Analysis
 
 ## Data Pipeline Highlights
 
