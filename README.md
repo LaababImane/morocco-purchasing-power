@@ -7,7 +7,7 @@ to analyze food inflation trends and household purchasing power from 2009 to 202
 
 - [x] Data collection — web scraping HCP's monthly CPI bulletins (245 months, 2009–2026)
 - [x] Data quality & cleaning
-- [ ] Exploratory analysis
+- [x] Exploratory analysis
 - [ ] World Bank wage/CPI comparison layer
 - [ ] Power BI dashboard
 
