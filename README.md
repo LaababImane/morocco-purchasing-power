@@ -8,7 +8,7 @@ to analyze food inflation trends and household purchasing power from 2009 to 202
 - [x] Data collection — web scraping HCP's monthly CPI bulletins (245 months, 2009–2026)
 - [x] Data quality & cleaning
 - [x] Exploratory analysis
-- [ ] World Bank wage/CPI comparison layer
+- [x] World Bank wage/CPI comparison layer
 - [ ] Power BI dashboard
 
 ## Overview
@@ -42,12 +42,14 @@ morocco-purchasing-power/
 ├── notebooks/
 │   ├── 01_download_data.ipynb      # Scraping + extraction pipeline
 │   ├── 02_data_quality.ipynb       # Cleaning, validation, normalization
-│   └── 03_eda.ipynb                # Exploratory analysis
+│   ├── 03_eda.ipynb                # Exploratory analysis
+│   └── 04_wage_comparison.ipynb
 └── data/
     └── processed/
         ├── hcp_monthly_category_clean.csv
         ├── hcp_yearly_category_clean.csv
-        └── hcp_city_indices_clean.csv
+        ├── hcp_city_indices_clean.csv
+        └── smig_history.csv 
 ```
 
 ## Datasets
@@ -83,6 +85,13 @@ morocco-purchasing-power/
 - **Regional price variation**: There is about an 8-point difference between the cities with the highest CPI (Guelmim and Al-Hoceima) and the lowest (Settat).
 
 - **Al-Hoceima shows unusually high price volatility** compared to other cities. The biggest changes happened around 2013 and during the 2022–2024 inflation period. This suggests that the changes are linked to real local price movements.
+
+- **The minimum wage (SMIG) increased faster than food prices from 2009 to 2020**, so the purchasing power of the minimum wage increased by about 15% during this period.
+
+- **The 2022-2023 global inflation shock hit purchasing power hard**: food prices increased faster than wages, causing purchasing power to fall by about 13–14% at its lowest point in early 2023.
+
+- **Purchasing power has improved since then**. By 2026, it had recovered to around 104–105% of its April 2020 level, helped by SMIG increases in September 2023, January 2025, and January 2026.
+
 
 ## Tech Stack
 
